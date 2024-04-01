@@ -2,7 +2,7 @@ function qs = ik_rl(Ln,qn,xgn,lbound,ubound)
 
 optFcn = @(q_l) finalJ_rl(q_l, Ln, xgn);
 
-optimopts = optimoptions('fmincon', 'Display', 'iter-detailed', 'SpecifyObjectiveGradient', true, 'HessianFcn', @(q_l, lambda) finalH_rl(q_l,Ln,xgn));
+optimopts = optimoptions('fmincon', 'Display', 'iter-detailed', 'SpecifyObjectiveGradient', true, 'HessianFcn', @(q_l, lambda) finalH_rl(q_l,Ln,xgn),'MaxIterations',300);
 % optimopts = optimoptions('fmincon', 'Display', 'iter-detailed', 'SpecifyObjectiveGradient', true);
 
 qs = fmincon(optFcn, qn, [], [], [], [], lbound, ubound, [], optimopts);

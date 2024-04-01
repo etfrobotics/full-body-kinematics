@@ -3,7 +3,7 @@ function qs = ik_ub(Ln,qn,xgn,lbound,ubound)
 optFcn = @(q) finalJ_ub(q, Ln, xgn);
 
 %optimopts = optimoptions('fmincon', 'Display', 'iter-detailed', 'SpecifyObjectiveGradient', true, 'HessianFcn', @(q, lambda) finalH_ub(qb,q,Ln,xgn));
-optimopts = optimoptions('fmincon', 'Display', 'iter-detailed', 'SpecifyObjectiveGradient', true);
+optimopts = optimoptions('fmincon', 'Display', 'iter-detailed', 'SpecifyObjectiveGradient', true,'MaxIterations',300);
 
 qs = fmincon(optFcn, qn, [], [], [], [], lbound, ubound, [], optimopts);
 end
