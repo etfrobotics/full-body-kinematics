@@ -1,2 +1,2 @@
 # full-body-kinematics
-Full human body kinematics with 31 DoF.
+Full human body kinematics with 18 DoF.
