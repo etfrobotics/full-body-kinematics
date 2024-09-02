@@ -1,4 +1,7 @@
 function H = fk(q,L)
+
+% Forward kinematics of body joints
+
 sz = size(q);
 if sz(2) > sz(1)
     q = q.';

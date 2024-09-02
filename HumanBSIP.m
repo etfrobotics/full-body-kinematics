@@ -1,5 +1,13 @@
 function bsipStruct = HumanBSIP(M,Ln)
-segmentNames = [
+
+% Function for calculating body segment inertial parameters based on 
+% "Estimation of the Body Segment Inertial Parameters for the Rigid Body 
+% Biomechanical Models Used in Motion Analysis" by R. Dumas and J. Wojtusch
+% 
+% The function calculates body segment weights, relative positions of the
+% centers of mass and matrices of inertia
+
+segmentNames = [    % Ordered as in Dumas (2018)
     "head";
     "torso_head";
     "abdomen";
@@ -18,7 +26,13 @@ segmentNames = [
     "l_foot";
     ];
 
-% Ln = [Lbw;Lwt;Lta;La1;La2;Lh;Lbl;Ll1;Ll2;Ll3];
+% Initialize structure in correct order
+bsipStruct.pelvis_abdomen.m = 0; bsipStruct.torso_head.m = 0; 
+bsipStruct.r_upper_arm.m = 0; bsipStruct.r_forearm.m = 0;
+bsipStruct.l_upper_arm.m = 0; bsipStruct.l_forearm.m = 0;
+bsipStruct.r_thigh.m = 0; bsipStruct.r_shank.m = 0; bsipStruct.r_foot.m = 0;
+bsipStruct.l_thigh.m = 0; bsipStruct.l_shank.m = 0; bsipStruct.l_foot.m = 0;
+
 L_head=0.8*Ln(2); L_torso=Ln(2); L_abdomen=0.6*Ln(1); L_pelvis=0.4*Ln(1); L_upper_arm=Ln(4);
 L_forearm=Ln(5); L_hand=Ln(6); L_thigh=Ln(8); L_shank=Ln(9); L_foot=Ln(10);
 
@@ -51,6 +65,7 @@ for i = 11:16
     bsipStruct.(segmentNames(i)).I = S*bsipStruct.(segmentNames(i-6)).I*S.';  
 end
 
+% Joining of certain body segments due to omitted degrees of freedom
 torso_head_com = (bsipStruct.("head").r_com.*bsipStruct.("head").m + ...
     bsipStruct.("torso_head").r_com.*bsipStruct.("torso_head").m)/(bsipStruct.("head").m+bsipStruct.("torso_head").m);
 r_th_head = bsipStruct.("head").r_com-torso_head_com; r_th_torso = bsipStruct.("torso_head").r_com-torso_head_com;

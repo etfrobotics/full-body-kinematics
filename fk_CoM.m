@@ -1,4 +1,7 @@
-function H_CoM = fk_CoM(H,q,L,BSIP,M)
+function H_CoM = fk_CoM(H,L,BSIP,M)
+
+% Function for calculating CoM positions based on joint positions
+
 d = BSIP.torso_head.r_com;
 H_temp = eye(4); H_temp(1:3,4) = d;
 CoM_torso_head = H(:,:,3)*H_temp;
@@ -41,9 +44,9 @@ H_temp = eye(4); H_temp(1:3,1:3) = Rot; H_temp(1:3,4) = Rot*d;
 CoM_l_foot = H(:,:,20)*H_temp;
 
 
-H_CoM = cat(3,CoM_torso_head,CoM_pelvis_abdomen, ...
+H_CoM = cat(3,CoM_pelvis_abdomen,CoM_torso_head, ...
     CoM_r_upper_arm,CoM_r_forearm,CoM_l_upper_arm,CoM_l_forearm, ...
-    CoM_r_thigh,CoM_r_shank,CoM_r_foot,CoM_l_shank,CoM_l_thigh,CoM_l_foot);
+    CoM_r_thigh,CoM_r_shank,CoM_r_foot,CoM_l_thigh,CoM_l_shank,CoM_l_foot);
 
 fn = fieldnames(BSIP);
 d_CoM = [0;0;0];
@@ -51,7 +54,7 @@ d_CoM = [0;0;0];
 for i = 1:length(fn)
     d_CoM = d_CoM + BSIP.(fn{i}).m*H_CoM(1:3,4,i)/M;
 end
-H_temp = eye(4); H_temp(1:3,4) = d_CoM;
+H_temp = zeros(4,4); H_temp(1:3,4) = d_CoM;
 CoM = H(:,:,1) + H_temp;
 
 H_CoM = cat(3,H_CoM,CoM);
