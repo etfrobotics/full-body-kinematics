@@ -17,7 +17,7 @@ output_csv = 'landmarks.csv'
 # Initialize MediaPipe Pose and Drawing utilities
 mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
-pose = mp_pose.Pose()
+pose = mp_pose.Pose(model_complexity=1)
 
 # Open the video file
 cap = cv2.VideoCapture(video_path)

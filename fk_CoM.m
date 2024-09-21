@@ -1,4 +1,4 @@
-function H_CoM = fk_CoM(H,L,BSIP,M)
+function H_CoM = fk_CoM(H,q,L,BSIP,M)
 
 % Function for calculating CoM positions based on joint positions
 
@@ -29,7 +29,7 @@ CoM_r_thigh = H(:,:,14)*H_temp;
 Rot = [0 0 -1; 1 0 0; 0 -1 0]; d = BSIP.r_shank.r_com+[0;0;L(9)];
 H_temp = eye(4); H_temp(1:3,1:3) = Rot; H_temp(1:3,4) = Rot*d;
 CoM_r_shank = H(:,:,15)*H_temp;
-Rot = [0 0 -1; 1 0 0; 0 -1 0]; d = BSIP.r_foot.r_com;
+Rot = [0 0 -1; 1 0 0; 0 -1 0]*[cos(-q(14)) 0 sin(-q(14)); 0 1 0; -sin(-q(14)) 0 cos(-q(14))]; d = BSIP.r_foot.r_com;
 H_temp = eye(4); H_temp(1:3,1:3) = Rot; H_temp(1:3,4) = Rot*d;
 CoM_r_foot = H(:,:,15)*H_temp;
 
@@ -39,7 +39,7 @@ CoM_l_thigh = H(:,:,19)*H_temp;
 Rot = [0 0 -1; -1 0 0; 0 1 0]; d = BSIP.l_shank.r_com+[0;0;L(9)];
 H_temp = eye(4); H_temp(1:3,1:3) = Rot; H_temp(1:3,4) = Rot*d;
 CoM_l_shank = H(:,:,20)*H_temp;
-Rot = [0 0 -1; -1 0 0; 0 1 0]; d = BSIP.l_foot.r_com;
+Rot = [0 0 -1; -1 0 0; 0 1 0]*[cos(q(18)) 0 sin(q(18)); 0 1 0; -sin(q(18)) 0 cos(q(18))]; d = BSIP.l_foot.r_com;
 H_temp = eye(4); H_temp(1:3,1:3) = Rot; H_temp(1:3,4) = Rot*d;
 CoM_l_foot = H(:,:,20)*H_temp;
 

@@ -26,7 +26,7 @@ lm = lm*R;
 
 xgn = [lm(12,:), lm(14,:), lm(16,:), lm(11,:), lm(13,:), lm(15,:)].';
 lbound_w = -pi/6;
-ubound_w = pi/2;
+ubound_w = pi/4;
 lbound_a = [-pi/2;-3*pi/4;0];
 ubound_a = [pi;pi/4;5*pi/6];
 lbound_ub = [-Inf; lbound_w; lbound_a; -ubound_a];
@@ -43,14 +43,14 @@ lm = lm*R3;
 
 %% Right leg
 
-xgn = [lm(26,:), lm(30,:), lm(32,:)].';
+xgn = [lm(26,:), lm(28,:), lm(32,:)].';
 lbound_l = [-pi/4;-pi/3;-3*pi/4;-pi/4];
 ubound_l = [3*pi/4;pi/6;0;pi/6];
 q_rl = ik_rl(Ln(7:10),qn(11:14,1),xgn,lbound_l,ubound_l);
 
 %% Left leg
 
-xgn = [lm(25,:), lm(29,:), lm(31,:)].';
+xgn = [lm(25,:), lm(27,:), lm(31,:)].';
 q_ll = ik_ll(Ln(7:10),qn(15:18),xgn,-ubound_l,-lbound_l);
 
 %% 
